@@ -1,4 +1,4 @@
- 
+
 export const STR_USER = "user";
 export const STR_TOKEN = "token";
 export const STR_THEME_MODE = "THEME_MODE";
@@ -19,6 +19,8 @@ export const ROUTES = {
   ABOUT_US: "/aus/",
   PRIVACY_POLICY: "/pp/",
   TERMS_OF_USE: "/tou",
+  SUBMIT_APPLICATION: "/sa",
+  VIEW_APPLICATIONS: "/va",
 };
 
 export function getRandomInt(min: number, max: number) {
@@ -26,8 +28,8 @@ export function getRandomInt(min: number, max: number) {
 }
 
 export function speakText(text: string, lang: string) {
-  
-  if ('speechSynthesis' in window  ) {
+
+  if ('speechSynthesis' in window) {
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = lang;
     speech.rate = .9; // Speed of the speech (0.1 to 10)

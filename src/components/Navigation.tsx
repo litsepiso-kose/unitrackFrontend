@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { t } from "i18next";
 import { ROUTES } from "../helpers/common";
 import {
-  SettingsOutlined,
   VideoCallOutlined,
   SupportOutlined,
 } from "@mui/icons-material";
@@ -29,7 +28,7 @@ export default function Navigation({ isChatOpen }: NavigationProps) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        flexGrow: isChatOpen ? 1 : 0, 
+        flexGrow: isChatOpen ? 1 : 0,
         transition: "flex-grow 0.3s ease",
       }}
     >
@@ -50,22 +49,23 @@ export default function Navigation({ isChatOpen }: NavigationProps) {
           </ListItem>
 
           <ListItem>
-            <ListItemButton selected onClick={() => navigate(ROUTES.SUPPORT)}>
+            <ListItemButton selected onClick={() => navigate(ROUTES.SUBMIT_APPLICATION)}>
               <ListItemDecorator>
                 <SupportOutlined fontSize="small" />
               </ListItemDecorator>
-              <ListItemContent>{t("sidebar.support")}</ListItemContent>
+              <ListItemContent>{t("welcome.submit_application")}</ListItemContent>
             </ListItemButton>
           </ListItem>
 
           <ListItem>
-            <ListItemButton selected onClick={() => navigate(ROUTES.SETTING)}>
+            <ListItemButton selected onClick={() => navigate(ROUTES.VIEW_APPLICATIONS)}>
               <ListItemDecorator>
-                <SettingsOutlined fontSize="small" />
+                <SupportOutlined fontSize="small" />
               </ListItemDecorator>
-              <ListItemContent>{t("sidebar.settings")}</ListItemContent>
+              <ListItemContent>{t("welcome.view_application")}</ListItemContent>
             </ListItemButton>
           </ListItem>
+
         </List>
       </ListItem>
     </List>

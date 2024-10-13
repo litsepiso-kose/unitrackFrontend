@@ -15,6 +15,8 @@ import Terms_Of_Use from "../routes/Terms_Of_Use";
 import Notifications from "../routes/Notifications";
 import Support from "../routes/Support";
 import Layout from "../Layout";
+import SubmitApplication from "../routes/SubmitApplication";
+import ViewApplications from "../routes/ViewApplications";
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +64,16 @@ export const router = createBrowserRouter([
       {
         path: `${ROUTES.MEETING}:roomId`,
         element: <Meeting />,
+      },  
+      {
+        path: ROUTES.SUBMIT_APPLICATION,
+        element: <SubmitApplication />,
       },
+      {
+        path: ROUTES.VIEW_APPLICATIONS,
+        element: <ViewApplications />,
+      },
+
     ],
   },
   {

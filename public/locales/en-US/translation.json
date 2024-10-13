@@ -28,7 +28,9 @@
     "join": "Join",
     "try_premium": "Try Premium Globetalk features",
     "what_premium_provides": "Globetalk Premium includes longer group calls, recording, and other features.",
-    "enter_code_or_link": "Enter a code or link"
+    "enter_code_or_link": "Enter a code or link",
+    "submit_application": "Submit an application",
+    "view_application": "View an application"
   },
   "sidebar": {
     "home": "Home",
@@ -68,5 +70,8 @@
     "phonesupport": "Phone Support",
     "faq": "FAQ",
     "faqs": "Frequently Asked Questions"
+  },
+  "submit_application": {
+    "submit": "Submit"
   }
 }
