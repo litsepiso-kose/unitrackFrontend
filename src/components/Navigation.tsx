@@ -66,6 +66,15 @@ export default function Navigation({ isChatOpen }: NavigationProps) {
             </ListItemButton>
           </ListItem>
 
+          <ListItem>
+            <ListItemButton selected onClick={() => navigate(ROUTES.VIEW_APPLICATIONS_COPY)}>
+              <ListItemDecorator>
+                <SupportOutlined fontSize="small" />
+              </ListItemDecorator>
+              <ListItemContent>{t("welcome.view_application")}</ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
         </List>
       </ListItem>
     </List>

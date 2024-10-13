@@ -17,6 +17,7 @@ import Support from "../routes/Support";
 import Layout from "../Layout";
 import SubmitApplication from "../routes/SubmitApplication";
 import ViewApplications from "../routes/ViewApplications";
+import ViewApplications_copy from "../routes/ViewApplications_copy";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.VIEW_APPLICATIONS,
         element: <ViewApplications />,
+      },
+      {
+        path: ROUTES.VIEW_APPLICATIONS_COPY,
+        element: <ViewApplications_copy/>,
       },
 
     ],

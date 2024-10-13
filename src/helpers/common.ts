@@ -21,6 +21,7 @@ export const ROUTES = {
   TERMS_OF_USE: "/tou",
   SUBMIT_APPLICATION: "/sa",
   VIEW_APPLICATIONS: "/va",
+  VIEW_APPLICATIONS_COPY: "/cpy",
 };
 
 export function getRandomInt(min: number, max: number) {
