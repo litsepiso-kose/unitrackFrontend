@@ -1,0 +1,67 @@
+{
+  "auth": {
+    "signup": "Teken aan",
+    "signin": "Meld aan",
+    "signin_to_continue": "Deur voort te gaan, stem jy in tot die Gebruiksvoorwaardes en Privaatheidsbeleid.",
+    "signup_to_continue": "Deur 'n rekening te skep, stem jy in tot die Gebruiksvoorwaardes en Privaatheidsbeleid.",
+    "email": "E-pos",
+    "password": "Wagwoord",
+    "click_to_signup": "Kliek hier om 'n rekening te skep",
+    "sign_in_btn": "Meld aan",
+    "sign_up_btn": "Teken aan",
+    "password_confirm": "Bevestig Wagwoord",
+    "already_has_acc": "Het jy reeds 'n rekening? Klik hier om nou aan te meld!",
+    "forgot_password": "Wagwoord vergeet",
+    "password_reset_Info": "Voer die e-pos in wat jy gebruik het om jou rekening te skep sodat ons vir jou instruksies kan stuur oor hoe om jou wagwoord te herstel.",
+    "send_to_reset_btn": "Stuur",
+    "back_to_login_btn": "Terug na Aanmelding",
+    "terms_of_use": "Gebruiksvoorwaardes",
+    "privacy_policy": "Privaatheidsbeleid",
+    "help": "Hulp",
+    "log_out": "Afmeld"
+  },
+  "welcome": {
+    "welcome": "Welkom",
+    "vide_calls_for_all": "Video-oproepe en vergaderings vir almal in meer as 200 tale.",
+    "provide_vid_calls": "Globetalk verskaf veilige, maklik-om-te-gebruik video-oproepe en vergaderings vir almal met naatlose vertaling, op enige toestel se blaaier.",
+    "new_meeting": "Nuwe vergadering",
+    "join": "Sluit aan",
+    "try_premium": "Probeer Premium Globetalk-funksies",
+    "what_premium_provides": "Globetalk Premium sluit langer groep-oproepe, opname, en ander funksies in.",
+    "enter_code_or_link": "Voer 'n kode of skakel in"
+  },
+  "sidebar": {
+    "home": "Tuis",
+    "notifications": "Kennisgewings",
+    "settings": "Instellings",
+    "support": "Ondersteuning"
+  },
+  "meeting": {
+    "copy_meeting_link": "Kopieer vergaderingskakel",
+    "change_listening_language": "Verander luistertaal",
+    "caption": "Onderskrifte skakel",
+    "camera": "Kamera skakel",
+    "microphone": "Mikrofoon skakel",
+    "meetingdetails": "Vergaderingbesonderhede"
+  },
+  "settings": {
+    "account_settings": "Rekeninginstellings",
+    "edit_profile": "Wysig Profiel",
+    "change_password": "Verander Wagwoord",
+    "add_a_payment_method": "Voeg 'n Betaalmetode By",
+    "push_notifications": "Stootkennisgewings",
+    "More": "Meer",
+    "about_us": "Oor Ons",
+    "terms_of_use": "Gebruiksvoorwaardes",
+    "privacy_policy": "Privaatheidsbeleid",
+    "save": "Stoor"
+  },
+  "support": {
+    "wording1": "As jy hulp nodig het, is ons hier om te help! Jy kan ons kontak deur enige van die volgende metodes.",
+    "wording2": "Vir onmiddellike hulp, skakel asseblief ons 24/7 ondersteuningslyn by +27 (800) 123-4567.",
+    "emailsupport": "E-pos Ondersteuning",
+    "phonesupport": "Telefoon Ondersteuning",
+    "faq": "Gereelde Vrae",
+    "faqs": "Gereeld Vrae"
+  }
+}

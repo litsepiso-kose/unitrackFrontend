@@ -1,0 +1,67 @@
+{
+  "auth": {
+    "signup": "S'inscrire",
+    "signin": "Se connecter",
+    "signin_to_continue": "En continuant, vous acceptez les Conditions d'utilisation et la Politique de confidentialité.",
+    "signup_to_continue": "En créant un compte, vous acceptez les Conditions d'utilisation et la Politique de confidentialité.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "click_to_signup": "cliquez ici pour créer un compte",
+    "sign_in_btn": "Se connecter",
+    "sign_up_btn": "S'inscrire",
+    "password_confirm": "Confirmer le mot de passe",
+    "already_has_acc": "Vous avez déjà un compte ? Cliquez ici pour vous connecter maintenant !",
+    "forgot_password": "Mot de passe oublié",
+    "password_reset_Info": "Veuillez entrer l'adresse e-mail que vous avez utilisée pour créer votre compte afin que nous puissions vous envoyer des instructions pour réinitialiser votre mot de passe.",
+    "send_to_reset_btn": "Envoyer",
+    "back_to_login_btn": "Retour à la connexion",
+    "terms_of_use": "Conditions d'utilisation",
+    "privacy_policy": "Politique de confidentialité",
+    "help": "Assistance",
+    "log_out": "Déconnexion"
+  },
+  "welcome": {
+    "welcome": "Bienvenue",
+    "vide_calls_for_all": "Appels vidéo et réunions pour tous en plus de 200 langues.",
+    "provide_vid_calls": "Globetalk offre des appels vidéo et des réunions sécurisés, faciles à utiliser pour tous, avec traduction fluide, sur le navigateur de n'importe quel appareil.",
+    "new_meeting": "Nouvelle réunion",
+    "join": "Rejoindre",
+    "try_premium": "Essayez les fonctionnalités Premium de Globetalk",
+    "what_premium_provides": "Globetalk Premium comprend des appels de groupe plus longs, l'enregistrement, et d'autres fonctionnalités.",
+    "enter_code_or_link": "Entrez un code ou un lien"
+  },
+  "sidebar": {
+    "home": "Accueil",
+    "notifications": "Notifications",
+    "settings": "Paramètres",
+    "support": "Assistance"
+  },
+  "meeting": {
+    "copy_meeting_link": "Copier le lien de la réunion",
+    "change_listening_language": "Changer la langue d'écoute",
+    "caption": "Activer/désactiver les sous-titres",
+    "camera": "Activer/désactiver la caméra",
+    "microphone": "Activer/désactiver le microphone",
+    "meetingdetails": "Détails de la réunion"
+  },
+  "settings": {
+    "account_settings": "Paramètres du compte",
+    "edit_profile": "Modifier le profil",
+    "change_password": "Changer le mot de passe",
+    "add_a_payment_method": "Ajouter un mode de paiement",
+    "push_notifications": "Notifications push",
+    "More": "Plus",
+    "about_us": "À propos de nous",
+    "terms_of_use": "Conditions d'utilisation",
+    "privacy_policy": "Politique de confidentialité",
+    "save": "Enregistrer"
+  },
+  "support": {
+    "wording1": "Si vous avez besoin d'aide, nous sommes là pour vous aider! Vous pouvez nous contacter par l'un des moyens suivants.",
+    "wording2": "Pour une assistance immédiate, veuillez appeler notre ligne d'assistance 24/7 au +27 (800) 123-4567.",
+    "emailsupport": "Support par Email",
+    "phonesupport": "Support par Téléphone",
+    "faq": "FAQ",
+    "faqs": "Questions Fréquemment Posées"
+  }
+}

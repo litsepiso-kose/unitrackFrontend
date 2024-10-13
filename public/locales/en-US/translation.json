@@ -1,0 +1,72 @@
+{
+  "auth": {
+    "signup": "Sign up",
+    "signin": "Sign in",
+    "signin_to_continue": "By continuing, you agree to the Terms of use and Privacy Policy.",
+    "signup_to_continue": "By creating an account, you agree to the Terms of use and Privacy Policy.",
+    "email": "Email",
+    "password": "Password",
+    "click_to_signup": "Click here to create an account",
+    "sign_in_btn": "Sign in",
+    "sign_up_btn": "Sign up",
+    "password_confirm": "Confirm Password",
+    "already_has_acc": "Already have an account? Click here to sign in now!",
+    "forgot_password": "Forgot Password",
+    "password_reset_Info": "Enter the email you used to create your account so we can send you instructions on how to reset your passowrd.",
+    "send_to_reset_btn": "Send",
+    "back_to_login_btn": "Back to Login",
+    "terms_of_use": "Terms of use",
+    "privacy_policy": "Privacy Policy",
+    "help": "Help",
+    "log_out": "Log out"
+  },
+  "welcome": {
+    "welcome": "Welcome",
+    "vide_calls_for_all": "Video calls and meetings for everyone in more than 200 languages.",
+    "provide_vid_calls": "Globetalk provides secure, easy-to-use video calls and meetings for everyone with seemless translation, on any device's browser.",
+    "new_meeting": "Instant meeting",
+    "join": "Join",
+    "try_premium": "Try Premium Globetalk features",
+    "what_premium_provides": "Globetalk Premium includes longer group calls, recording, and other features.",
+    "enter_code_or_link": "Enter a code or link"
+  },
+  "sidebar": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "support": "Support"
+  },
+  "meeting": {
+    "copy_meeting_link": "Copy meeting link",
+    "change_listening_language": "Change listening language",
+    "caption": "Captions toggle",
+    "camera": "Camera toggle",
+    "microphone": "Microphone toggle",
+    "meetingdetails": "Meeting details",
+    "share_screen": "Share screen",
+    "record": "Start recording",
+    "record_notice": "Are you sure you are about to record. Please adhere to the privacy terms of other users in the session. Additionally, note that your recording is locally stored in your machine and may be lost if the tab or browser is restarted. In case of loss, you are welcome to carry on with the recording but any previous recording may not be recoberable."
+  },
+  "settings": {
+    "account_settings": "Account Settings",
+    "edit_profile": "Edit Profile",
+    "change_password": "Change Password",
+    "add_a_payment_method": "Add a payment method",
+    "push_notifications": "Push notifications",
+    "More": "More",
+    "chooseVoiceOver": "Choose voice available in your browser. Current is: ",
+    "select": "Click to select",
+    "about_us": "About us",
+    "terms_of_use": "Terms of use",
+    "privacy_policy": "Privacy Policy",
+    "save": "Save"
+  },
+  "support": {
+    "wording1": "If you need assistance, we're here to help! You can reach out to us through any of the following methods.",
+    "wording2": "For immediate assistance, please call our 24/7 support line at +27 (800) 123-4567..",
+    "emailsupport": "Email Support",
+    "phonesupport": "Phone Support",
+    "faq": "FAQ",
+    "faqs": "Frequently Asked Questions"
+  }
+}
