@@ -20,6 +20,7 @@ export const ROUTES = {
   SUBMIT_APPLICATION: "/sa",
   UNIVERSITY: "/uvrst",
   BURSARY: "/brsr",
+  BURSARY_APPLY: "/brsr_app",
   PROFILE: "/prfl",
  };
 

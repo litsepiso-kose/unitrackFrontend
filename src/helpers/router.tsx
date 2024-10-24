@@ -16,6 +16,7 @@ import Layout from "../Layout";
 import University from "../routes/university/University";
 import Bursary from "../routes/bursary/Bursary";
 import Profile from "../routes/Profile";
+import BursaryApply from "../routes/bursary/BursaryApply";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE,
         element: <Profile />,
+      },
+      {
+        path: ROUTES.BURSARY_APPLY,
+        element: <BursaryApply />,
       },
     ],
   },

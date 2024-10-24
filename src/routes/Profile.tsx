@@ -229,7 +229,6 @@ export default function MyProfile() {
 
   if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
 
-
   const {
     register,
     handleSubmit,
@@ -262,7 +261,6 @@ export default function MyProfile() {
             My profile
           </Typography>
         </Box>
-
       </Box>
       <Stack
         spacing={4}
