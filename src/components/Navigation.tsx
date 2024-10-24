@@ -12,6 +12,7 @@ import {
   SupportOutlined,
 } from "@mui/icons-material";
 import { Avatar, Box, Divider, GlobalStyles, IconButton, Sheet, Typography } from "@mui/joy";
+import { useUser } from "../redux/user-slice";
 
 interface NavigationProps {
   isChatOpen: boolean;
@@ -20,6 +21,7 @@ interface NavigationProps {
 
 export default function Navigation({ isChatOpen }: NavigationProps) {
   const navigate = useNavigate();
+  const user = useUser();
 
   function closeSidebar(): void {
     throw new Error("Function not implemented.");
@@ -138,15 +140,16 @@ export default function Navigation({ isChatOpen }: NavigationProps) {
       </Box>
       <Divider />
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }} >
-        <IconButton onClick={()=>navigate(ROUTES.PROFILE)}>
+        <IconButton onClick={() => navigate(ROUTES.PROFILE)}>
           <Avatar
             variant="outlined"
             size="sm"
           />
         </IconButton>
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
+          <Typography level="body-xs">
+            {user.email}
+          </Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral">
         </IconButton>

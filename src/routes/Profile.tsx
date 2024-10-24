@@ -6,7 +6,7 @@ import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 
-import { Avatar, Grid } from '@mui/joy';
+import { Alert, Avatar, Grid } from '@mui/joy';
 import TextField from '../components/TextField';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,7 +14,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitLoadingButton } from '../components/SubmitLoadingButton';
 import { Notice } from '../components/Notice';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { InfoOutlined } from '@mui/icons-material';
 
 const FormSchema = z.object({
   name: z
@@ -133,7 +134,61 @@ type FormSchemaType = z.infer<typeof FormSchema>;
 const _SaveCredential = gql` 
 mutation SaveCredential($input: CredentialInput!) {
   saveCredential(input: $input) {
+    messages
+  }
+}
+`;
+// const defaultValues: FormSchemaType = {
+//   emailAddress: "ppp@ddd.com",
+//   name: "John",
+//   surname: "Doe",
+//   dob: "1990-01-01",
+//   idNumberOrPassport: "1234567890123",
+//   nationality: "South African",
+//   gender: "Male",
+//   homeLanguage: "English",  // Updated to match the Zod schema field
+//   resAddress: "123 Street Name, City, Country",
+//   postAddress: "P.O. Box 123, City, Country",
+//   phoneNumber: "1234567890",
+//   parentOrGuardian: "Jane Doe",
+//   parentOrGuardianPhoneNumber: "0987654321",
+//   parentOrGuardianEmail: "jane.doe@example.com",
+//   parentOrGuardianOccupation: "Teacher",
+//   parentOrGuardianWorkPhoneNumber: "0987654322",
+//   parentOrGuardianWorkAddress: "456 Avenue Name, City, Country",
+//   parentOrGuardianHouseholdIncome: "50000",
+//   schoolName: "High School Example",
+//   examinationBoard: "National Examination Board",
+//   grade12Results: "A",
+//   grade11Results: "B",
+// };
 
+const _GetCredential = gql`
+query GetCredential {
+  getCredential {
+    userId
+    name
+    surname
+    dob
+    idNumberOrPassport
+    nationality
+    gender
+    homeLanguage
+    resAddress
+    postAddress
+    phoneNumber
+    parentOrGuardian
+    emailAddress
+    parentOrGuardianPhoneNumber
+    parentOrGuardianEmail
+    parentOrGuardianOccupation
+    parentOrGuardianWorkPhoneNumber
+    parentOrGuardianWorkAddress
+    parentOrGuardianHouseholdIncome
+    schoolName
+    examinationBoard
+    grade12Results
+    grade11Results
     messages
   }
 }
@@ -145,44 +200,9 @@ export default function MyProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const defaultValues: FormSchemaType = {
-    emailAddress: "ppp@ddd.com",
-    name: "John",
-    surname: "Doe",
-    dob: "1990-01-01",
-    idNumberOrPassport: "1234567890123",
-    nationality: "South African",
-    gender: "Male",
-    homeLanguage: "English",  // Updated to match the Zod schema field
-    resAddress: "123 Street Name, City, Country",
-    postAddress: "P.O. Box 123, City, Country",
-    phoneNumber: "1234567890",
-    parentOrGuardian: "Jane Doe",
-    parentOrGuardianPhoneNumber: "0987654321",
-    parentOrGuardianEmail: "jane.doe@example.com",
-    parentOrGuardianOccupation: "Teacher",
-    parentOrGuardianWorkPhoneNumber: "0987654322",
-    parentOrGuardianWorkAddress: "456 Avenue Name, City, Country",
-    parentOrGuardianHouseholdIncome: "50000",
-    schoolName: "High School Example",
-    examinationBoard: "National Examination Board",
-    grade12Results: "A",
-    grade11Results: "B",
-  };
-
   const onError = (errors: any) => {
     console.log("React Hook Form Errors:", errors);  // Logs all validation errors
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: import.meta.env.DEV ? defaultValues : {}
-  });
 
   const [saveCredential] = useMutation(_SaveCredential);
 
@@ -191,7 +211,7 @@ export default function MyProfile() {
     setIsLoading(true);
 
     try {
-      const input = { userId: "testId", ..._input }
+      const input = { ..._input }
       const response = await saveCredential({ variables: { input } });
 
       setShowSubmitButton(false);
@@ -205,6 +225,27 @@ export default function MyProfile() {
     }
   };
 
+  const { data, error } = useQuery(_GetCredential)
+
+  if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
+
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset, setValue
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(FormSchema),
+    // defaultValues: import.meta.env.DEV ? defaultValues : {}
+  });
+
+  if (data?.getCredential && data?.getCredential.messages.length === 0) {
+    Object.keys(data.getCredential).forEach((key) => {
+      setValue(key as keyof FormSchemaType, data.getCredential[key as keyof FormSchemaType]);
+    });
+  }
+
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
       <Box
@@ -215,7 +256,8 @@ export default function MyProfile() {
           zIndex: 9995,
         }}
       >
-        <Box  >
+        <Box >
+          {data?.getCredential.messages.length > 0 && <Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You should submit some info before applying</Alert>}
           <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
             My profile
           </Typography>

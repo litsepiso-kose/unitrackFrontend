@@ -13,7 +13,6 @@ import Terms_Of_Use from "../routes/Terms_Of_Use";
 import Notifications from "../routes/Notifications";
 import Support from "../routes/Support";
 import Layout from "../Layout";
-import SubmitApplication from "../routes/SubmitApplication";
 import University from "../routes/university/University";
 import Bursary from "../routes/bursary/Bursary";
 import Profile from "../routes/Profile";
@@ -60,10 +59,6 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.TERMS_OF_USE,
         element: <Terms_Of_Use />,
-      },
-      {
-        path: ROUTES.SUBMIT_APPLICATION,
-        element: <SubmitApplication />,
       },
       {
         path: ROUTES.UNIVERSITY,

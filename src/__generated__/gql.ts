@@ -13,10 +13,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n  }\n}\n": types.VerifyTokenDocument,
+    "\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n    voiceLanguage\n  }\n}\n": types.VerifyTokenDocument,
     "\nmutation Signup($input: SignupInput!) {\n  signup(input: $input)\n}\n": types.SignupDocument,
+    " \nmutation SaveCredential($input: CredentialInput!) {\n  saveCredential(input: $input) {\n    messages\n  }\n}\n": types.SaveCredentialDocument,
+    "\nquery GetCredential {\n  getCredential {\n    userId\n    name\n    surname\n    dob\n    idNumberOrPassport\n    nationality\n    gender\n    homeLanguage\n    resAddress\n    postAddress\n    phoneNumber\n    parentOrGuardian\n    emailAddress\n    parentOrGuardianPhoneNumber\n    parentOrGuardianEmail\n    parentOrGuardianOccupation\n    parentOrGuardianWorkPhoneNumber\n    parentOrGuardianWorkAddress\n    parentOrGuardianHouseholdIncome\n    schoolName\n    examinationBoard\n    grade12Results\n    grade11Results\n    messages\n  }\n}\n": types.GetCredentialDocument,
     "\nmutation PasswordUpdate($password: String!) {\n  passwordUpdate(password: $password)\n}\n": types.PasswordUpdateDocument,
-    "\n mutation SetUserLanguage($language: String!) {\n  setUserLanguage(language: $language)\n}\n  ": types.SetUserLanguageDocument,
+    "\n mutation SetUserLanguage($voiceLanguage: String!) {\n  setUserLanguage(voiceLanguage: $voiceLanguage)\n}\n  ": types.SetUserLanguageDocument,
     "\n  mutation Signin($input: SigninInput!) {\n    signin(input: $input) {\n      email\n      messages\n      token\n    }\n  }\n": types.SigninDocument,
     "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
 };
@@ -38,7 +40,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n  }\n}\n"): (typeof documents)["\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n  }\n}\n"];
+export function gql(source: "\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n    voiceLanguage\n  }\n}\n"): (typeof documents)["\nmutation VerifyToken($input: String!) {\n  verifyToken(input: $input) {\n    isValid\n    token\n    email\n    userType\n    voiceLanguage\n  }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -46,11 +48,19 @@ export function gql(source: "\nmutation Signup($input: SignupInput!) {\n  signup
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: " \nmutation SaveCredential($input: CredentialInput!) {\n  saveCredential(input: $input) {\n    messages\n  }\n}\n"): (typeof documents)[" \nmutation SaveCredential($input: CredentialInput!) {\n  saveCredential(input: $input) {\n    messages\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery GetCredential {\n  getCredential {\n    userId\n    name\n    surname\n    dob\n    idNumberOrPassport\n    nationality\n    gender\n    homeLanguage\n    resAddress\n    postAddress\n    phoneNumber\n    parentOrGuardian\n    emailAddress\n    parentOrGuardianPhoneNumber\n    parentOrGuardianEmail\n    parentOrGuardianOccupation\n    parentOrGuardianWorkPhoneNumber\n    parentOrGuardianWorkAddress\n    parentOrGuardianHouseholdIncome\n    schoolName\n    examinationBoard\n    grade12Results\n    grade11Results\n    messages\n  }\n}\n"): (typeof documents)["\nquery GetCredential {\n  getCredential {\n    userId\n    name\n    surname\n    dob\n    idNumberOrPassport\n    nationality\n    gender\n    homeLanguage\n    resAddress\n    postAddress\n    phoneNumber\n    parentOrGuardian\n    emailAddress\n    parentOrGuardianPhoneNumber\n    parentOrGuardianEmail\n    parentOrGuardianOccupation\n    parentOrGuardianWorkPhoneNumber\n    parentOrGuardianWorkAddress\n    parentOrGuardianHouseholdIncome\n    schoolName\n    examinationBoard\n    grade12Results\n    grade11Results\n    messages\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\nmutation PasswordUpdate($password: String!) {\n  passwordUpdate(password: $password)\n}\n"): (typeof documents)["\nmutation PasswordUpdate($password: String!) {\n  passwordUpdate(password: $password)\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n mutation SetUserLanguage($language: String!) {\n  setUserLanguage(language: $language)\n}\n  "): (typeof documents)["\n mutation SetUserLanguage($language: String!) {\n  setUserLanguage(language: $language)\n}\n  "];
+export function gql(source: "\n mutation SetUserLanguage($voiceLanguage: String!) {\n  setUserLanguage(voiceLanguage: $voiceLanguage)\n}\n  "): (typeof documents)["\n mutation SetUserLanguage($voiceLanguage: String!) {\n  setUserLanguage(voiceLanguage: $voiceLanguage)\n}\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
