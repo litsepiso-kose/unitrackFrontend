@@ -30,7 +30,7 @@ mutation SaveCredential($input: CredentialInput!) {
 }
 `;
 
-export const FormSchema = z.object({
+  const FormSchema = z.object({
   name: z
     .string()
     .min(1, "Name is required")
