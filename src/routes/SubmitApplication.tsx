@@ -1,24 +1,14 @@
 import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Sheet, Typography } from "@mui/joy";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { ROUTES } from "../helpers/common";
-import ConfirmPassword from "../components/ConfirmPassword";
 import { Notice } from "../components/Notice";
 import { SubmitLoadingButton } from "../components/SubmitLoadingButton";
-import Email from "../components/Email";
-import Password from "../components/Password";
 import { gql, useMutation } from "@apollo/client";
-import { SignupInput } from "../__generated__/graphql";
 import { t } from "i18next";
-import { ColorSchemeToggle } from "../components/ColorSchemeToggle";
 import TextField from "../components/TextField";
-
-const AUTO_SIGNIN_TIMEOUT_REDIRECT = 5;
 
 const _SaveCredential = gql` 
 mutation SaveCredential($input: CredentialInput!) {
@@ -105,9 +95,6 @@ export default function Page() {
   const [messages, setMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [gotoSigninTimeout, setGotoSigninTimeout] =
-    useState<any>(null);
-  const navigate = useNavigate();
   const [saveCredential] = useMutation(_SaveCredential);
 
   const {
@@ -133,14 +120,13 @@ export default function Page() {
   });
 
 
-  const processForm: SubmitHandler<FormSchemaType> = async (input) => {
-    console.log(input)
+  const processForm: SubmitHandler<FormSchemaType> = async (_input) => {
+    console.log(_input)
     setIsLoading(true);
 
     try {
-      input = { userId: "testId", ...input }
+      const input = { userId: "testId", ..._input }
       const response = await saveCredential({ variables: { input } });
-      const success = response.data?.signup;
 
       setShowSubmitButton(false);
       setMessages(response.data.saveCredential.messages)
@@ -289,9 +275,6 @@ export default function Page() {
             onClose={() => {
               setShowSubmitButton(true);
               setMessages([]);
-              if (gotoSigninTimeout) {
-                clearTimeout(gotoSigninTimeout);
-              }
               reset();
             }}
             messages={messages}

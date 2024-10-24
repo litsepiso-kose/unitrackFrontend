@@ -138,9 +138,7 @@ export default function Header() {
             }}
           >
             <Avatar
-              src="https://i.pravatar.cc/40?img=2"
-              srcSet="https://i.pravatar.cc/80?img=2"
-              sx={{ maxWidth: "32px", maxHeight: "32px" }}
+               sx={{ maxWidth: "32px", maxHeight: "32px" }}
             />
           </MenuButton>
           <Menu
@@ -153,7 +151,7 @@ export default function Header() {
               "--ListItem-radius": "var(--joy-radius-sm)",
             }}
           >
-            <MenuItem>
+            <MenuItem onClick={()=>navigate(ROUTES.PROFILE)}>
               <Box
                 sx={{
                   display: "flex",
@@ -161,9 +159,7 @@ export default function Header() {
                 }}
               >
                 <Avatar
-                  src="https://i.pravatar.cc/40?img=2"
-                  srcSet="https://i.pravatar.cc/80?img=2"
-                  sx={{ borderRadius: "50%" }}
+                   sx={{ borderRadius: "50%" }}
                 />
                 <Box sx={{ ml: 1.5 }}>
                   <Typography level="title-sm" textColor="text.primary">

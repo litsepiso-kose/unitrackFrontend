@@ -3,9 +3,7 @@ import { ROUTES } from "./common";
 import Signin from "../routes/Signin";
 import Signup from "../routes/Signup";
 import AuthGuard from "../routes/AuthGuard";
-// import ErrorPage from "../routes/error-page";
 import Welcome from "../routes/Welcome";
-import Meeting from "../routes/Meeting";
 import Settings from "../routes/Setting";
 import Forgot_Password from "../routes/Forgot_Password";
 import Add_Payment_Method from "../routes/Add_Payment_Method";
@@ -16,8 +14,9 @@ import Notifications from "../routes/Notifications";
 import Support from "../routes/Support";
 import Layout from "../Layout";
 import SubmitApplication from "../routes/SubmitApplication";
-import ViewApplications from "../routes/ViewApplications";
-import ViewApplications_copy from "../routes/ViewApplications_copy";
+import University from "../routes/university/University";
+import Bursary from "../routes/bursary/Bursary";
+import Profile from "../routes/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -63,22 +62,21 @@ export const router = createBrowserRouter([
         element: <Terms_Of_Use />,
       },
       {
-        path: `${ROUTES.MEETING}:roomId`,
-        element: <Meeting />,
-      },  
-      {
         path: ROUTES.SUBMIT_APPLICATION,
         element: <SubmitApplication />,
       },
       {
-        path: ROUTES.VIEW_APPLICATIONS,
-        element: <ViewApplications />,
+        path: ROUTES.UNIVERSITY,
+        element: <University />,
       },
       {
-        path: ROUTES.VIEW_APPLICATIONS_COPY,
-        element: <ViewApplications_copy/>,
+        path: ROUTES.BURSARY,
+        element: <Bursary />,
       },
-
+      {
+        path: ROUTES.PROFILE,
+        element: <Profile />,
+      },
     ],
   },
   {

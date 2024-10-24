@@ -1,4 +1,4 @@
-import { Box, Card, Divider, Grid, IconButton, Select, Typography } from "@mui/joy";
+import { Box, Card, Divider, Grid, IconButton, Typography } from "@mui/joy";
 import { t } from "i18next";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Password from "../components/Password";
@@ -13,12 +13,6 @@ import { useMutation } from "@apollo/client/react/hooks/useMutation";
 import { gql } from "@apollo/client";
 import { SubmitLoadingButton } from "../components/SubmitLoadingButton";
 import { Notice } from "../components/Notice";
-import { SpeakerPhoneOutlined } from "@mui/icons-material";
-import Option from '@mui/joy/Option';
-import { playText } from "../hooks/useSpeechRecognition";
-import { useUser } from "../redux/user-slice";
-import { useVoices } from "../hooks/useVoices";
-import i18n from "../helpers/i18n";
 
 export default function Setting() {
   const navigate = useNavigate();
@@ -26,10 +20,7 @@ export default function Setting() {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [isSuccess, setIsSuccess] = useState<boolean>();
-  const user = useUser()
-  const voices = useVoices(i18n.language.split("-")[0])
-
-  const {
+   const {
     register,
     handleSubmit,
     formState: { errors },
@@ -56,14 +47,6 @@ export default function Setting() {
   ];
 
   const [passwordUpdate] = useMutation(PASSWORDUPDATE);
-  const [setUserLanguage] = useMutation(SETUSERLANGUAGE);
-
-  function setLanguage(voiceLanguage: string | null) {
-    if (voiceLanguage) {
-      playText("Hi", voiceLanguage);
-      setUserLanguage({ variables: { voiceLanguage } })
-    }
-  }
 
   const processForm: SubmitHandler<FormSchemaType> = async (data) => {
     try {
@@ -130,26 +113,6 @@ export default function Setting() {
                 />
               )}
             </form>
-          </Card>
-        </Grid>
-
-        <Grid xs={12} sm={12} md={6}>
-          <Card variant="outlined" sx={{ maxWidth: "100%", gap: 1.5 }}>
-            <Typography sx={{ fontSize: "lg", fontWeight: "md" }}>
-              {t("settings.chooseVoiceOver")}
-            </Typography>
-            <Divider />
-            <Select defaultValue={user.voiceLanguage} placeholder={t("settings.select")} startDecorator={<SpeakerPhoneOutlined />}
-              onChange={(
-                _: React.SyntheticEvent | null,
-                newValue: string | null,
-              ) => {
-                setLanguage(newValue);
-              }}      >
-              {voices.map((voice, index) => (
-                <Option key={index} value={voice.lang}> {`${voice.name} (${voice.lang})`}</Option>
-              ))}
-            </Select>
           </Card>
         </Grid>
       </Grid>

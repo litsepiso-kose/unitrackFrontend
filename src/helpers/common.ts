@@ -2,9 +2,7 @@
 export const STR_USER = "user";
 export const STR_TOKEN = "token";
 export const STR_THEME_MODE = "THEME_MODE";
-export const APP_NAME = "globetalk";
-export const PETER_KAPENA_PASSWORD = "LS0tLS1CRUdJTiBQVUJMSUMgS";
-export const PETER_KAPENA_EMAIL = "peterkapenapeter@gmail.com";
+export const APP_NAME = "unitrack";
 
 export const ROUTES = {
   HOME: "/",
@@ -20,9 +18,10 @@ export const ROUTES = {
   PRIVACY_POLICY: "/pp/",
   TERMS_OF_USE: "/tou",
   SUBMIT_APPLICATION: "/sa",
-  VIEW_APPLICATIONS: "/va",
-  VIEW_APPLICATIONS_COPY: "/cpy",
-};
+  UNIVERSITY: "/uvrst",
+  BURSARY: "/brsr",
+  PROFILE: "/prfl",
+ };
 
 export function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max || min - min)) + min;

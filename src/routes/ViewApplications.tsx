@@ -1,8 +1,0 @@
-
-function ViewApplications() {
-  return (
-    <div>ViewApplications</div>
-  )
-}
-
-export default ViewApplications
