@@ -21,6 +21,8 @@ const documents = {
     "\n mutation SetUserLanguage($voiceLanguage: String!) {\n  setUserLanguage(voiceLanguage: $voiceLanguage)\n}\n  ": types.SetUserLanguageDocument,
     "\n  mutation Signin($input: SigninInput!) {\n    signin(input: $input) {\n      email\n      messages\n      token\n    }\n  }\n": types.SigninDocument,
     "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
+    "\nquery GetApplications($type: Float!) {\n  getApplications(type: $type) {\n    deadline\n    description\n    fullName\n    messages\n    name\n    status\n    succeeded\n    type\n    typeId\n    url\n    id\n  }\n}\n": types.GetApplicationsDocument,
+    "\nmutation SaveApplication($input: ApplicationInput!) {\n  saveApplication(input: $input) {\n    messages\n    succeeded\n  }\n}\n": types.SaveApplicationDocument,
 };
 
 /**
@@ -69,6 +71,14 @@ export function gql(source: "\n  mutation Signin($input: SigninInput!) {\n    si
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n"): (typeof documents)["\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery GetApplications($type: Float!) {\n  getApplications(type: $type) {\n    deadline\n    description\n    fullName\n    messages\n    name\n    status\n    succeeded\n    type\n    typeId\n    url\n    id\n  }\n}\n"): (typeof documents)["\nquery GetApplications($type: Float!) {\n  getApplications(type: $type) {\n    deadline\n    description\n    fullName\n    messages\n    name\n    status\n    succeeded\n    type\n    typeId\n    url\n    id\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation SaveApplication($input: ApplicationInput!) {\n  saveApplication(input: $input) {\n    messages\n    succeeded\n  }\n}\n"): (typeof documents)["\nmutation SaveApplication($input: ApplicationInput!) {\n  saveApplication(input: $input) {\n    messages\n    succeeded\n  }\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

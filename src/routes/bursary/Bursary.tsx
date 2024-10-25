@@ -1,15 +1,43 @@
 import { CreateRounded, InfoOutlined } from "@mui/icons-material"
-import { Alert, Box, Button, Divider, Typography } from "@mui/joy"
+import { Alert, Box, Button, CircularProgress, Typography } from "@mui/joy"
 import BasicTable from "../../components/BasicTable";
 import { ROUTES } from "../../helpers/common";
 import { useNavigate } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
+import { Notice } from "../../components/Notice";
+import { GetApplicationsQuery } from "../../__generated__/graphql";
 
+const _GetApplications = gql`
+query GetApplications($type: Float!) {
+  getApplications(type: $type) {
+    deadline
+    description
+    fullName
+    messages
+    name
+    status
+    succeeded
+    type
+    typeId
+    url
+    id
+  }
+}
+`
 function Bursary() {
   const navigate = useNavigate();
 
+  const { data, error, loading } = useQuery<GetApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
+  console.log(data?.getApplications)
+  if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
+
+  if (loading) return <CircularProgress />
+
   return (
     <Box>
-      <Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>
+      {data?.getApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
+      {!data?.getApplications[0]?.succeeded && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getApplications[0].messages || []}></Notice>}
+
       <Box
         sx={{
           p: 2,
@@ -23,7 +51,7 @@ function Bursary() {
             My applications
           </Typography>
           <Typography level="title-sm" textColor="text.tertiary">
-            5 bursaries
+            {data?.getApplications.length} bursary(ies)
           </Typography>
         </Box>
         <Button
@@ -34,37 +62,19 @@ function Bursary() {
           Apply
         </Button>
       </Box>
-      <Divider />
+
       <BasicTable
-        onRowClick={(id) => navigate(ROUTES.SIGNUP + '/' + id)}  // Adjust navigation as needed
-        data={dummyData.map(item => {
-          return { ...item };
-        })}
+        onRowClick={(id) => navigate(ROUTES.BURSARY_APPLY + '/' + id)}  // Adjust navigation as needed
+        data={data?.getApplications.map(item => ({
+          deadline: item.deadline || "",
+          status: item.status || 2,
+          description: item.description || "",
+          name: item.name || "",
+          id: item.id
+        })) || []}
       />
-    </Box>
+    </Box >
   )
 }
-
-const dummyData = [
-  {
-    id: 1,
-    bursaryName: 'ABC Bursary',
-    status: 'Pending',
-    deadline: '2024-12-01'
-  },
-  {
-    id: 2,
-    bursaryName: 'XYZ Scholarship',
-    status: 'Approved',
-    deadline: '2024-11-15'
-  },
-  {
-    id: 3,
-    bursaryName: 'DEF Bursary',
-    status: 'Rejected',
-    deadline: '2024-10-31'
-  }
-];
-
 
 export default Bursary

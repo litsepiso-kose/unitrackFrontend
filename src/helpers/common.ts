@@ -22,7 +22,7 @@ export const ROUTES = {
   BURSARY: "/brsr",
   BURSARY_APPLY: "/brsr_app",
   PROFILE: "/prfl",
- };
+};
 
 export function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max || min - min)) + min;
@@ -41,10 +41,6 @@ export function speakText(text: string, lang: string) {
     alert('Your browser does not support the Web Speech API.');
   }
 }
-
-// function getNLLB_code(script: string): string | undefined {
-//   return languages.find(l => l.script === script)?.nllb_code
-// }
 
 export function generateName() {
   const name1 = [

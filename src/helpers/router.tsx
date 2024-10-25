@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: ROUTES.BURSARY_APPLY,
+        path: `${ROUTES.BURSARY_APPLY}/:id?`,
         element: <BursaryApply />,
       },
     ],
