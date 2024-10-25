@@ -12,7 +12,6 @@ query GetApplications($type: Float!) {
   getApplications(type: $type) {
     deadline
     description
-    fullName
     messages
     name
     status
@@ -36,7 +35,7 @@ function Bursary() {
   return (
     <Box>
       {data?.getApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
-      {!data?.getApplications[0]?.succeeded && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getApplications[0].messages || []}></Notice>}
+      {!data?.getApplications[0]?.succeeded && data?.getApplications[0] && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getApplications[0]?.messages || []}></Notice>}
 
       <Box
         sx={{

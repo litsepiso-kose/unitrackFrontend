@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Typography } from "@mui/joy"
+import { Box, Card, CircularProgress, Stack, Typography } from "@mui/joy"
 import TextField from "../../components/TextField"
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -7,7 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Notice } from "../../components/Notice";
 import { SubmitLoadingButton } from "../../components/SubmitLoadingButton";
 import FTextarea from "../../components/TextArea";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { useParams } from 'react-router-dom';
+import { GetApplicationQuery } from "../../__generated__/graphql";
 
 const FormSchema = z.object({
     name: z
@@ -46,26 +48,33 @@ const defaultValues = {
     url: "https://futureleadersbursary.org/apply"
 };
 
+const _GetApplication = gql`
+query GetApplication($getApplicationId: String!) {
+  getApplication(id: $getApplicationId) {
+    id
+    name
+    description
+    url
+    typeId
+    deadline
+    status
+    type
+    messages
+    succeeded
+  }
+}`
+
 type FormSchemaType = z.infer<typeof FormSchema>;
 
 function BursaryApply() {
+    const { id } = useParams();
     const [showSubmitButton, setShowSubmitButton] = useState(true);
     const [messages, setMessages] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<FormSchemaType>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: !import.meta.env.DEV ? defaultValues : {}
-    });
-
     const onError = (errors: any) => {
-        console.log("React Hook Form Errors:", errors);  // Logs all validation errors
+        console.log("React Hook Form Errors:", errors);
     };
     const [saveApplication] = useMutation(_SaveApplication);
 
@@ -74,7 +83,7 @@ function BursaryApply() {
         setIsLoading(true);
 
         try {
-            const response = await saveApplication({ variables: { input: { ...input, type: 0 } } });
+            const response = await saveApplication({ variables: { input: { ...input, type: 0, id } } });
             setShowSubmitButton(false);
 
             setMessages(response.data.saveApplication.messages);
@@ -90,10 +99,32 @@ function BursaryApply() {
         }
     };
 
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+        reset,
+    } = useForm<FormSchemaType>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: !import.meta.env.DEV ? defaultValues : {}
+    });
+
+    const { data, error, loading } = useQuery<GetApplicationQuery>(_GetApplication, { variables: { getApplicationId: id } })
+    if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
+    if (loading) return <CircularProgress />
+
+    console.log(data?.getApplication)
+    if (data?.getApplication && data?.getApplication.succeeded) {
+        Object.keys(data.getApplication).forEach((key) => {
+            setValue(key as keyof FormSchemaType, (data.getApplication as any)[key as keyof FormSchemaType]);
+        });
+    }
+
     return (
         <Box sx={{ flex: 1, width: '100%' }}>
             <Typography level="h3" component="h2" sx={{ mt: 1, mb: 2 }}>
-                Submit a bursary application
+                {id ? "Edit your application below" : " Submit a bursary application"}
             </Typography>
             <Stack spacing={4} sx={{ display: 'flex', mx: 'auto', }}           >
                 <form onSubmit={handleSubmit(processForm, onError)}>
