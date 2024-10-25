@@ -1,4 +1,4 @@
-import { AspectRatio, Avatar, Box, Card, Divider, FormLabel, Grid, Stack, Typography } from "@mui/joy"
+import { Box, Card, Stack, Typography } from "@mui/joy"
 import TextField from "../../components/TextField"
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Notice } from "../../components/Notice";
 import { SubmitLoadingButton } from "../../components/SubmitLoadingButton";
 import FTextarea from "../../components/TextArea";
+import { gql, useMutation } from "@apollo/client";
 
 const FormSchema = z.object({
     name: z
@@ -30,6 +31,14 @@ const FormSchema = z.object({
         .optional(), // If it's not mandatory
 });
 
+const _SaveApplication = gql`
+mutation SaveApplication($input: ApplicationInput!) {
+  saveApplication(input: $input) {
+    messages
+    succeeded
+  }
+}
+`
 const defaultValues = {
     name: "Future Leaders Bursary",
     description: "A bursary aimed at supporting high-performing students from underprivileged backgrounds.",
@@ -49,33 +58,36 @@ function BursaryApply() {
         register,
         handleSubmit,
         formState: { errors },
-        reset, setValue,
+        reset,
     } = useForm<FormSchemaType>({
         resolver: zodResolver(FormSchema),
-        defaultValues: import.meta.env.DEV ? defaultValues : {}
+        defaultValues: !import.meta.env.DEV ? defaultValues : {}
     });
 
     const onError = (errors: any) => {
         console.log("React Hook Form Errors:", errors);  // Logs all validation errors
     };
+    const [saveApplication] = useMutation(_SaveApplication);
 
-    const processForm: SubmitHandler<FormSchemaType> = async (_input) => {
-        console.log(_input)
-        // setIsLoading(true);
+    const processForm: SubmitHandler<FormSchemaType> = async (input) => {
+        console.log(input)
+        setIsLoading(true);
 
-        // try {
-        //   const input = { ..._input }
-        //   const response = await saveCredential({ variables: { input } });
+        try {
+            const response = await saveApplication({ variables: { input: { ...input, type: 0 } } });
+            setShowSubmitButton(false);
 
-        //   setShowSubmitButton(false);
-        //   setMessages(response.data.saveCredential.messages)
-        //   setIsSuccess(true);
-        // } catch (error) {
-        //   setMessages(["Sign up failed. Please try again later."]);
-        //   console.error("Sign-up error:", error);
-        // } finally {
-        //   setIsLoading(false);
-        // }
+            setMessages(response.data.saveApplication.messages);
+            setIsSuccess(response.data.saveApplication.succeeded);
+        } catch (error) {
+            setMessages((prevMessages) => [
+                ...(prevMessages || []),
+                "Submission failed."
+            ]);
+            console.error("Sign-up error:", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
