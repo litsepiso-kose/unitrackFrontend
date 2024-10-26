@@ -16,28 +16,17 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type ApplicationInput = {
-  deadline: Scalars['String']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
-  fullName?: InputMaybe<Scalars['String']['input']>;
-  name: Scalars['String']['input'];
-  status?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['Float']['input']>;
-  url: Scalars['String']['input'];
-};
-
-export type ApplicationOutput = {
-  __typename?: 'ApplicationOutput';
-  deadline?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
+export type ApplicationDataOutput = {
+  __typename?: 'ApplicationDataOutput';
+  applyLink: Scalars['String']['output'];
+  courses?: Maybe<Array<Scalars['String']['output']>>;
+  deadline: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
   messages: Array<Scalars['String']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
   succeeded: Scalars['Boolean']['output'];
-  type?: Maybe<Scalars['Float']['output']>;
-  typeId?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  type: Scalars['Float']['output'];
 };
 
 export type CredentialInput = {
@@ -100,7 +89,6 @@ export type Mutation = {
   forgotPassword: Scalars['Boolean']['output'];
   passwordUpdate: Scalars['Boolean']['output'];
   resetPassword: Scalars['Boolean']['output'];
-  saveApplication: ApplicationOutput;
   saveCredential: CredentialOutput;
   setUserLanguage: Scalars['Boolean']['output'];
   setUserType: Scalars['Boolean']['output'];
@@ -123,11 +111,6 @@ export type MutationPasswordUpdateArgs = {
 export type MutationResetPasswordArgs = {
   newPassword: Scalars['String']['input'];
   token: Scalars['String']['input'];
-};
-
-
-export type MutationSaveApplicationArgs = {
-  input: ApplicationInput;
 };
 
 
@@ -162,20 +145,9 @@ export type MutationVerifyTokenArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getApplication: ApplicationOutput;
-  getApplications: Array<ApplicationOutput>;
+  getAllApplications: Array<ApplicationDataOutput>;
   getCredential: CredentialOutput;
   test: Scalars['String']['output'];
-};
-
-
-export type QueryGetApplicationArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type QueryGetApplicationsArgs = {
-  type: Scalars['Float']['input'];
 };
 
 export type SigninInput = {
@@ -251,26 +223,10 @@ export type SigninMutationVariables = Exact<{
 
 export type SigninMutation = { __typename?: 'Mutation', signin: { __typename?: 'SigninOutput', email?: string | null, messages: Array<string>, token: string } };
 
-export type GetApplicationsQueryVariables = Exact<{
-  type: Scalars['Float']['input'];
-}>;
+export type GetAllApplicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetApplicationsQuery = { __typename?: 'Query', getApplications: Array<{ __typename?: 'ApplicationOutput', deadline?: string | null, description?: string | null, messages: Array<string>, name?: string | null, status?: number | null, succeeded: boolean, type?: number | null, typeId?: string | null, url?: string | null, id?: string | null }> };
-
-export type SaveApplicationMutationVariables = Exact<{
-  input: ApplicationInput;
-}>;
-
-
-export type SaveApplicationMutation = { __typename?: 'Mutation', saveApplication: { __typename?: 'ApplicationOutput', messages: Array<string>, succeeded: boolean } };
-
-export type GetApplicationQueryVariables = Exact<{
-  getApplicationId: Scalars['String']['input'];
-}>;
-
-
-export type GetApplicationQuery = { __typename?: 'Query', getApplication: { __typename?: 'ApplicationOutput', id?: string | null, name?: string | null, description?: string | null, url?: string | null, typeId?: string | null, deadline?: string | null, status?: number | null, type?: number | null, messages: Array<string>, succeeded: boolean } };
+export type GetAllApplicationsQuery = { __typename?: 'Query', getAllApplications: Array<{ __typename?: 'ApplicationDataOutput', name: string, description: string, type: number, deadline: string, courses?: Array<string> | null, applyLink: string, id: string, messages: Array<string>, succeeded: boolean }> };
 
 
 export const VerifyTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isValid"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"voiceLanguage"}}]}}]}}]} as unknown as DocumentNode<VerifyTokenMutation, VerifyTokenMutationVariables>;
@@ -280,6 +236,4 @@ export const GetCredentialDocument = {"kind":"Document","definitions":[{"kind":"
 export const PasswordUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PasswordUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"passwordUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<PasswordUpdateMutation, PasswordUpdateMutationVariables>;
 export const SetUserLanguageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SetUserLanguage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"voiceLanguage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setUserLanguage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"voiceLanguage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"voiceLanguage"}}}]}]}}]} as unknown as DocumentNode<SetUserLanguageMutation, SetUserLanguageMutationVariables>;
 export const SigninDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SigninInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SigninMutation, SigninMutationVariables>;
-export const GetApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetApplications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getApplications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deadline"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"typeId"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetApplicationsQuery, GetApplicationsQueryVariables>;
-export const SaveApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SaveApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ApplicationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"saveApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<SaveApplicationMutation, SaveApplicationMutationVariables>;
-export const GetApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getApplicationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getApplicationId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"typeId"}},{"kind":"Field","name":{"kind":"Name","value":"deadline"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<GetApplicationQuery, GetApplicationQueryVariables>;
+export const GetAllApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllApplications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllApplications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"deadline"}},{"kind":"Field","name":{"kind":"Name","value":"courses"}},{"kind":"Field","name":{"kind":"Name","value":"applyLink"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<GetAllApplicationsQuery, GetAllApplicationsQueryVariables>;

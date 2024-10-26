@@ -5,37 +5,37 @@ import { ROUTES } from "../../helpers/common";
 import { useNavigate } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { Notice } from "../../components/Notice";
-import { GetApplicationsQuery } from "../../__generated__/graphql";
+import { GetAllApplicationsQuery } from "../../__generated__/graphql";
 
 const _GetApplications = gql`
-query GetApplications($type: Float!) {
-  getApplications(type: $type) {
-    deadline
-    description
-    messages
+query GetAllApplications {
+  getAllApplications {
     name
-    status
-    succeeded
+    description
     type
-    typeId
-    url
+    deadline
+    courses
+    applyLink
     id
+    messages
+    succeeded
+    
   }
-}
-`
+}`
+
 function Bursary() {
   const navigate = useNavigate();
 
-  const { data, error, loading } = useQuery<GetApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
-  console.log(data?.getApplications)
+  const { data, error, loading } = useQuery<GetAllApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
+  console.log(data?.getAllApplications)
   if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
 
   if (loading) return <CircularProgress />
 
   return (
     <Box>
-      {data?.getApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
-      {!data?.getApplications[0]?.succeeded && data?.getApplications[0] && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getApplications[0]?.messages || []}></Notice>}
+      {data?.getAllApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
+      {!data?.getAllApplications[0]?.succeeded && data?.getAllApplications[0] && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getAllApplications[0]?.messages || []}></Notice>}
 
       <Box
         sx={{
@@ -50,28 +50,26 @@ function Bursary() {
             My applications
           </Typography>
           <Typography level="title-sm" textColor="text.tertiary">
-            {data?.getApplications.length} bursary(ies)
+            {data?.getAllApplications.length} bursary(ies)
           </Typography>
         </Box>
-        <Button
-          size="sm" onClick={() => navigate(ROUTES.BURSARY_APPLY)}
-          startDecorator={<CreateRounded />}
-          sx={{ ml: 'auto' }}
-        >
-          Apply
-        </Button>
       </Box>
 
       <BasicTable
-        onRowClick={(id) => navigate(ROUTES.BURSARY_APPLY + '/' + id)}  // Adjust navigation as needed
-        data={data?.getApplications.map(item => ({
-          deadline: item.deadline || "",
-          status: item.status || 2,
-          description: item.description || "",
-          name: item.name || "",
-          id: item.id
-        })) || []}
+        onRowClick={(_) => { }}
+        data={
+          data?.getAllApplications.map(item => ({
+            id: item.id,
+            Name: item.name || "",
+            Description: item.description || "",
+            Deadline: item.deadline || "",
+            Status: 2,
+            "Type": item.type === 0 ? "Bursary" : "Academic",
+            "Apply link": item.applyLink
+          })) || []
+        }
       />
+
     </Box >
   )
 }

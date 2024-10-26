@@ -9,7 +9,6 @@ import { SubmitLoadingButton } from "../../components/SubmitLoadingButton";
 import FTextarea from "../../components/TextArea";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useParams } from 'react-router-dom';
-import { GetApplicationQuery } from "../../__generated__/graphql";
 
 const FormSchema = z.object({
     name: z
@@ -33,14 +32,14 @@ const FormSchema = z.object({
         .optional(), // If it's not mandatory
 });
 
-const _SaveApplication = gql`
-mutation SaveApplication($input: ApplicationInput!) {
-  saveApplication(input: $input) {
-    messages
-    succeeded
-  }
-}
-`
+// const _SaveApplication = gql`
+// mutation SaveApplication($input: ApplicationInput!) {
+//   saveApplication(input: $input) {
+//     messages
+//     succeeded
+//   }
+// }
+// `
 const defaultValues = {
     name: "Future Leaders Bursary",
     description: "A bursary aimed at supporting high-performing students from underprivileged backgrounds.",
@@ -48,21 +47,21 @@ const defaultValues = {
     url: "https://futureleadersbursary.org/apply"
 };
 
-const _GetApplication = gql`
-query GetApplication($getApplicationId: String!) {
-  getApplication(id: $getApplicationId) {
-    id
-    name
-    description
-    url
-    typeId
-    deadline
-    status
-    type
-    messages
-    succeeded
-  }
-}`
+// const _GetApplication = gql`
+// query GetApplication($getApplicationId: String!) {
+//   getApplication(id: $getApplicationId) {
+//     id
+//     name
+//     description
+//     url
+//     typeId
+//     deadline
+//     status
+//     type
+//     messages
+//     succeeded
+//   }
+// }`
 
 type FormSchemaType = z.infer<typeof FormSchema>;
 
@@ -77,30 +76,30 @@ function BursaryApply() {
         console.log("React Hook Form Errors:", errors);
     };
 
-    const [saveApplication] = useMutation(_SaveApplication);
-    const { data, error, loading } = useQuery<GetApplicationQuery>(_GetApplication, {
-        variables: { getApplicationId: id },
-        skip: !id // Skip the query if `id` is not provided
-    });
+    // const [saveApplication] = useMutation(_SaveApplication);
+    // const { data, error, loading } = useQuery<GetApplicationQuery>(_GetApplication, {
+    //     variables: { getApplicationId: id },
+    //     skip: !id // Skip the query if `id` is not provided
+    // });
 
     const processForm: SubmitHandler<FormSchemaType> = async (input) => {
         console.log(input);
-        setIsLoading(true);
+        // setIsLoading(true);
 
-        try {
-            const response = await saveApplication({ variables: { input: { ...input, type: 0, id } } });
-            setShowSubmitButton(false);
-            setMessages(response.data.saveApplication.messages);
-            setIsSuccess(response.data.saveApplication.succeeded);
-        } catch (error) {
-            setMessages((prevMessages) => [
-                ...(prevMessages || []),
-                "Submission failed."
-            ]);
-            console.error("Sign-up error:", error);
-        } finally {
-            setIsLoading(false);
-        }
+        // try {
+        //     const response = await saveApplication({ variables: { input: { ...input, type: 0, id } } });
+        //     setShowSubmitButton(false);
+        //     setMessages(response.data.saveApplication.messages);
+        //     setIsSuccess(response.data.saveApplication.succeeded);
+        // } catch (error) {
+        //     setMessages((prevMessages) => [
+        //         ...(prevMessages || []),
+        //         "Submission failed."
+        //     ]);
+        //     console.error("Sign-up error:", error);
+        // } finally {
+        //     setIsLoading(false);
+        // }
     };
 
     const {
@@ -114,27 +113,26 @@ function BursaryApply() {
         defaultValues: !import.meta.env.DEV ? defaultValues : {}
     });
 
-    // Handle error and loading states from `useQuery`
-    if (error) {
-        return (
-            <Notice
-                onClose={() => { window.location.href = '/' }}
-                messages={["An error happened on the server."]}
-            />
-        );
-    }
+    // // // Handle error and loading states from `useQuery`
+    // // if (error) {
+    // //     return (
+    // //         <Notice
+    // //             onClose={() => { window.location.href = '/' }}
+    // //             messages={["An error happened on the server."]}
+    // //         />
+    // //     );
+    // // }
 
-    if (loading) return <CircularProgress />;
+    // // if (loading) return <CircularProgress />;
 
-    // Populate form fields with data if `id` is provided and query succeeded
-    useEffect(() => {
-        if (id && data?.getApplication?.succeeded) {
-            Object.keys(data.getApplication).forEach((key) => {
-                setValue(key as keyof FormSchemaType, (data.getApplication as any)[key as keyof FormSchemaType]);
-            });
-        }
-    }, [data, id, setValue]);
-
+    // // Populate form fields with data if `id` is provided and query succeeded
+    // useEffect(() => {
+    //     if (id && data?.getApplication?.succeeded) {
+    //         Object.keys(data.getApplication).forEach((key) => {
+    //             setValue(key as keyof FormSchemaType, (data.getApplication as any)[key as keyof FormSchemaType]);
+    //         });
+    //     }
+    // }, [data, id, setValue]);
 
     return (
         <Box sx={{ flex: 1, width: '100%' }}>
