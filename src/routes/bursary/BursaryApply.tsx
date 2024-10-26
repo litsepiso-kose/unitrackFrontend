@@ -1,6 +1,6 @@
 import { Box, Card, CircularProgress, Stack, Typography } from "@mui/joy"
 import TextField from "../../components/TextField"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -76,16 +76,20 @@ function BursaryApply() {
     const onError = (errors: any) => {
         console.log("React Hook Form Errors:", errors);
     };
+
     const [saveApplication] = useMutation(_SaveApplication);
+    const { data, error, loading } = useQuery<GetApplicationQuery>(_GetApplication, {
+        variables: { getApplicationId: id },
+        skip: !id // Skip the query if `id` is not provided
+    });
 
     const processForm: SubmitHandler<FormSchemaType> = async (input) => {
-        console.log(input)
+        console.log(input);
         setIsLoading(true);
 
         try {
             const response = await saveApplication({ variables: { input: { ...input, type: 0, id } } });
             setShowSubmitButton(false);
-
             setMessages(response.data.saveApplication.messages);
             setIsSuccess(response.data.saveApplication.succeeded);
         } catch (error) {
@@ -110,16 +114,27 @@ function BursaryApply() {
         defaultValues: !import.meta.env.DEV ? defaultValues : {}
     });
 
-    const { data, error, loading } = useQuery<GetApplicationQuery>(_GetApplication, { variables: { getApplicationId: id } })
-    if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
-    if (loading) return <CircularProgress />
-
-    console.log(data?.getApplication)
-    if (data?.getApplication && data?.getApplication.succeeded) {
-        Object.keys(data.getApplication).forEach((key) => {
-            setValue(key as keyof FormSchemaType, (data.getApplication as any)[key as keyof FormSchemaType]);
-        });
+    // Handle error and loading states from `useQuery`
+    if (error) {
+        return (
+            <Notice
+                onClose={() => { window.location.href = '/' }}
+                messages={["An error happened on the server."]}
+            />
+        );
     }
+
+    if (loading) return <CircularProgress />;
+
+    // Populate form fields with data if `id` is provided and query succeeded
+    useEffect(() => {
+        if (id && data?.getApplication?.succeeded) {
+            Object.keys(data.getApplication).forEach((key) => {
+                setValue(key as keyof FormSchemaType, (data.getApplication as any)[key as keyof FormSchemaType]);
+            });
+        }
+    }, [data, id, setValue]);
+
 
     return (
         <Box sx={{ flex: 1, width: '100%' }}>

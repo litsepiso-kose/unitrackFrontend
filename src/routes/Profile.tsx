@@ -6,9 +6,9 @@ import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 
-import { Alert, Avatar, Grid } from '@mui/joy';
+import { Alert, Avatar, CircularProgress, Grid } from '@mui/joy';
 import TextField from '../components/TextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -201,52 +201,70 @@ export default function MyProfile() {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const onError = (errors: any) => {
-    console.log("React Hook Form Errors:", errors);  // Logs all validation errors
+    console.log("React Hook Form Errors:", errors); // Logs all validation errors
   };
 
   const [saveCredential] = useMutation(_SaveCredential);
+  const { data, error } = useQuery(_GetCredential);
 
   const processForm: SubmitHandler<FormSchemaType> = async (_input) => {
-    console.log(_input)
+    console.log(_input);
     setIsLoading(true);
 
     try {
-      const input = { ..._input }
+      const input = { ..._input };
       const response = await saveCredential({ variables: { input } });
 
       setShowSubmitButton(false);
-      setMessages(response.data.saveCredential.messages)
+      setMessages(response.data.saveCredential.messages);
       setIsSuccess(true);
     } catch (error) {
-      setMessages(["Sign up failed. Please try again later."]);
+      setMessages((prevMessages) => [
+        ...(prevMessages || []),
+        "Sign up failed. Please try again later."
+      ]);
       console.error("Sign-up error:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const { data, error } = useQuery(_GetCredential)
-
-  if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset, setValue
+    reset,
+    setValue
   } = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     // defaultValues: import.meta.env.DEV ? defaultValues : {}
   });
 
-  if (data?.getCredential && data?.getCredential.messages.length === 0) {
-    Object.keys(data.getCredential).forEach((key) => {
-      setValue(key as keyof FormSchemaType, data.getCredential[key as keyof FormSchemaType]);
-    });
-  }
+  // Handle error and data population in useEffect
+  useEffect(() => {
+    if (error) {
+      setMessages(["An error happened on the server."]);
+      console.error("Query error:", error);
+      window.location.href = '/';
+    }
+
+    if (data?.getCredential && data?.getCredential.messages.length === 0) {
+      Object.keys(data.getCredential).forEach((key) => {
+        setValue(key as keyof FormSchemaType, data.getCredential[key as keyof FormSchemaType]);
+      });
+    }
+  }, [data, error, setValue]);
 
   return (
     <Box sx={{ flex: 1, width: '100%' }}>
+      {isLoading && <CircularProgress />}
+      {messages.length > 0 && (
+        <Notice
+          onClose={() => { setMessages([]); }}
+          messages={messages}
+        />
+      )}
+
       <Box
         sx={{
           position: 'sticky',
