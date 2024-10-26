@@ -1,41 +1,41 @@
-import { CreateRounded, InfoOutlined } from "@mui/icons-material"
-import { Alert, Box, Button, CircularProgress, Typography } from "@mui/joy"
+import { InfoOutlined } from "@mui/icons-material"
+import { Alert, Box, CircularProgress, Typography } from "@mui/joy"
 import BasicTable from "../../components/BasicTable";
 import { ROUTES } from "../../helpers/common";
 import { useNavigate } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { Notice } from "../../components/Notice";
-import { GetAllApplicationsQuery } from "../../__generated__/graphql";
-
+import { GetUserApplicationsQuery } from "../../__generated__/graphql";
+ 
 const _GetApplications = gql`
-query GetAllApplications {
-  getAllApplications {
+query GetUserApplications($type: Float!) {
+  getUserApplications(type: $type) {
     name
+    id
     description
     type
     deadline
     courses
     applyLink
-    id
     messages
     succeeded
-    
   }
-}`
+}
+  `
 
 function Bursary() {
   const navigate = useNavigate();
 
-  const { data, error, loading } = useQuery<GetAllApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
-  console.log(data?.getAllApplications)
+  const { data, error, loading } = useQuery<GetUserApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
+  console.log(data?.getUserApplications)
   if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
 
   if (loading) return <CircularProgress />
 
   return (
     <Box>
-      {data?.getAllApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
-      {!data?.getAllApplications[0]?.succeeded && data?.getAllApplications[0] && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getAllApplications[0]?.messages || []}></Notice>}
+      {data?.getUserApplications.length === 0 && < Alert variant='outlined' color='warning' startDecorator={<InfoOutlined />}>You have not applied to a bursary yet. CLick the apply button to start</Alert>}
+      {!data?.getUserApplications[0]?.succeeded && data?.getUserApplications[0] && <Notice onClose={() => { window.location.href = '/' }} messages={data?.getUserApplications[0]?.messages || []}></Notice>}
 
       <Box
         sx={{
@@ -50,15 +50,15 @@ function Bursary() {
             My applications
           </Typography>
           <Typography level="title-sm" textColor="text.tertiary">
-            {data?.getAllApplications.length} bursary(ies)
+            {data?.getUserApplications.length} bursary(ies)
           </Typography>
         </Box>
       </Box>
 
       <BasicTable
-        onRowClick={(_) => { }}
+        onRowClick={(id) => navigate(ROUTES.BURSARY_APPLY + '/' + id)}
         data={
-          data?.getAllApplications.map(item => ({
+          data?.getUserApplications.map(item => ({
             id: item.id,
             Name: item.name || "",
             Description: item.description || "",
