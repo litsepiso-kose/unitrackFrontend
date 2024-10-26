@@ -94,6 +94,7 @@ export type Mutation = {
   setUserType: Scalars['Boolean']['output'];
   signin: SigninOutput;
   signup: Scalars['Boolean']['output'];
+  updateApplication: UserApplicationOutput;
   verifyToken: VerifyTokenOutput;
 };
 
@@ -139,6 +140,11 @@ export type MutationSignupArgs = {
 };
 
 
+export type MutationUpdateApplicationArgs = {
+  input: UserApplicationInput;
+};
+
+
 export type MutationVerifyTokenArgs = {
   input: Scalars['String']['input'];
 };
@@ -146,8 +152,20 @@ export type MutationVerifyTokenArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllApplications: Array<ApplicationDataOutput>;
+  getApplicationById: ApplicationDataOutput;
   getCredential: CredentialOutput;
+  getUserApplications: Array<ApplicationDataOutput>;
   test: Scalars['String']['output'];
+};
+
+
+export type QueryGetApplicationByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryGetUserApplicationsArgs = {
+  type: Scalars['Float']['input'];
 };
 
 export type SigninInput = {
@@ -165,6 +183,21 @@ export type SigninOutput = {
 export type SignupInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type UserApplicationInput = {
+  applicationId: Scalars['String']['input'];
+  status?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type UserApplicationOutput = {
+  __typename?: 'UserApplicationOutput';
+  applicationId: Scalars['String']['output'];
+  id?: Maybe<Scalars['String']['output']>;
+  messages: Array<Scalars['String']['output']>;
+  status?: Maybe<Scalars['Float']['output']>;
+  succeeded: Scalars['Boolean']['output'];
+  userId: Scalars['String']['output'];
 };
 
 export type VerifyTokenOutput = {
@@ -228,6 +261,20 @@ export type GetAllApplicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllApplicationsQuery = { __typename?: 'Query', getAllApplications: Array<{ __typename?: 'ApplicationDataOutput', name: string, description: string, type: number, deadline: string, courses?: Array<string> | null, applyLink: string, id: string, messages: Array<string>, succeeded: boolean }> };
 
+export type MutationMutationVariables = Exact<{
+  input: UserApplicationInput;
+}>;
+
+
+export type MutationMutation = { __typename?: 'Mutation', updateApplication: { __typename?: 'UserApplicationOutput', id?: string | null, userId: string, applicationId: string, status?: number | null, messages: Array<string>, succeeded: boolean } };
+
+export type GetApplicationByIdQueryVariables = Exact<{
+  getApplicationByIdId: Scalars['String']['input'];
+}>;
+
+
+export type GetApplicationByIdQuery = { __typename?: 'Query', getApplicationById: { __typename?: 'ApplicationDataOutput', name: string, id: string, description: string, type: number, deadline: string, courses?: Array<string> | null, applyLink: string, messages: Array<string>, succeeded: boolean } };
+
 
 export const VerifyTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isValid"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"voiceLanguage"}}]}}]}}]} as unknown as DocumentNode<VerifyTokenMutation, VerifyTokenMutationVariables>;
 export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
@@ -237,3 +284,5 @@ export const PasswordUpdateDocument = {"kind":"Document","definitions":[{"kind":
 export const SetUserLanguageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SetUserLanguage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"voiceLanguage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setUserLanguage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"voiceLanguage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"voiceLanguage"}}}]}]}}]} as unknown as DocumentNode<SetUserLanguageMutation, SetUserLanguageMutationVariables>;
 export const SigninDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SigninInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SigninMutation, SigninMutationVariables>;
 export const GetAllApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllApplications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllApplications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"deadline"}},{"kind":"Field","name":{"kind":"Name","value":"courses"}},{"kind":"Field","name":{"kind":"Name","value":"applyLink"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<GetAllApplicationsQuery, GetAllApplicationsQueryVariables>;
+export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserApplicationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"applicationId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
+export const GetApplicationByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetApplicationById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getApplicationByIdId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getApplicationById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getApplicationByIdId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"deadline"}},{"kind":"Field","name":{"kind":"Name","value":"courses"}},{"kind":"Field","name":{"kind":"Name","value":"applyLink"}},{"kind":"Field","name":{"kind":"Name","value":"messages"}},{"kind":"Field","name":{"kind":"Name","value":"succeeded"}}]}}]}}]} as unknown as DocumentNode<GetApplicationByIdQuery, GetApplicationByIdQueryVariables>;

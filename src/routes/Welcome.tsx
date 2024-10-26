@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { CreateRounded, InfoOutlined } from "@mui/icons-material"
-import { Alert, Box, Button, CircularProgress, Typography } from "@mui/joy"
+import { InfoOutlined } from "@mui/icons-material"
+import { Alert, Box, CircularProgress, Typography } from "@mui/joy"
 import { useNavigate } from "react-router-dom";
 import { GetAllApplicationsQuery } from "../__generated__/graphql";
 import BasicTable from "../components/BasicTable";
@@ -27,7 +27,7 @@ function Welcome() {
   const navigate = useNavigate();
 
   const { data, error, loading } = useQuery<GetAllApplicationsQuery>(_GetApplications, { variables: { type: 0 } })
-  console.log(data?.getAllApplications)
+  console.log(error)
   if (error) return <Notice onClose={() => { window.location.href = '/' }} messages={["An error happened on the server."]}></Notice>
 
   if (loading) return <CircularProgress />

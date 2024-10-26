@@ -22,6 +22,8 @@ const documents = {
     "\n  mutation Signin($input: SigninInput!) {\n    signin(input: $input) {\n      email\n      messages\n      token\n    }\n  }\n": types.SigninDocument,
     "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
     "\nquery GetAllApplications {\n  getAllApplications {\n    name\n    description\n    type\n    deadline\n    courses\n    applyLink\n    id\n    messages\n    succeeded\n    \n  }\n}": types.GetAllApplicationsDocument,
+    "\nmutation Mutation($input: UserApplicationInput!) {\n  updateApplication(input: $input) {\n    id\n    userId\n    applicationId\n    status\n    messages\n    succeeded\n  }\n}\n": types.MutationDocument,
+    "\nquery GetApplicationById($getApplicationByIdId: String!) {\n  getApplicationById(id: $getApplicationByIdId) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n": types.GetApplicationByIdDocument,
 };
 
 /**
@@ -74,6 +76,14 @@ export function gql(source: "\n  mutation Signup($input: SignupInput!) {\n    si
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nquery GetAllApplications {\n  getAllApplications {\n    name\n    description\n    type\n    deadline\n    courses\n    applyLink\n    id\n    messages\n    succeeded\n    \n  }\n}"): (typeof documents)["\nquery GetAllApplications {\n  getAllApplications {\n    name\n    description\n    type\n    deadline\n    courses\n    applyLink\n    id\n    messages\n    succeeded\n    \n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation Mutation($input: UserApplicationInput!) {\n  updateApplication(input: $input) {\n    id\n    userId\n    applicationId\n    status\n    messages\n    succeeded\n  }\n}\n"): (typeof documents)["\nmutation Mutation($input: UserApplicationInput!) {\n  updateApplication(input: $input) {\n    id\n    userId\n    applicationId\n    status\n    messages\n    succeeded\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery GetApplicationById($getApplicationByIdId: String!) {\n  getApplicationById(id: $getApplicationByIdId) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n"): (typeof documents)["\nquery GetApplicationById($getApplicationByIdId: String!) {\n  getApplicationById(id: $getApplicationByIdId) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
