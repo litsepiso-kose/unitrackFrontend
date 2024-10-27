@@ -30,7 +30,7 @@ import { Badge, CircularProgress, ListItemContent, ListItemDecorator } from "@mu
 import { t } from "i18next";
 import { useNavigate } from "react-router-dom";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Notice } from "./Notice";
 import { GetUserNotificationsQuery } from "../__generated__/graphql";
 
@@ -47,6 +47,12 @@ query GetUserNotifications {
   }
 }
 `
+
+const _SetNotificationStatusToREAD = gql`
+mutation SetNotificationStatusToREAD($id: String!) {
+  setNotificationStatusToREAD(id: $id)
+}
+`
 export default function Header() {
   const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
@@ -55,6 +61,9 @@ export default function Header() {
 
   const { data, error, loading } = useQuery<GetUserNotificationsQuery>(_GetUserNotifications, { variables: { type: 0 } });
   console.log(data?.getUserNotifications);
+  const [setNotificationStatusToREAD] = useMutation(_SetNotificationStatusToREAD, {
+    refetchQueries: ["GetUserNotifications"],
+  });
 
   function logout() {
     dispatch(signOut());
@@ -117,7 +126,6 @@ export default function Header() {
         <ColorSchemeToggle />
 
         <Dropdown>
-          {/* Badge wrapping MenuButton */}
           <Badge
             badgeContent={data?.getUserNotifications.length || 0}
             color="primary"
@@ -154,7 +162,10 @@ export default function Header() {
             {data?.getUserNotifications.map((notification, index) => (
               <MenuItem
                 key={index}
-                onClick={() => navigate(ROUTES.BURSARY_APPLY + '/' + notification.applicationId)}
+                onClick={() => {
+                  setNotificationStatusToREAD({ variables: { id: notification.id }, });
+                  navigate(ROUTES.BURSARY_APPLY + '/' + notification.applicationId)
+                }}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
