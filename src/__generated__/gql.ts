@@ -22,7 +22,7 @@ const documents = {
     "\n  mutation Signin($input: SigninInput!) {\n    signin(input: $input) {\n      email\n      messages\n      token\n    }\n  }\n": types.SigninDocument,
     "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
     "\nquery GetAllApplications {\n  getAllApplications {\n    name\n    description\n    type\n    deadline\n    courses\n    applyLink\n    id\n    messages\n    succeeded\n    \n  }\n}": types.GetAllApplicationsDocument,
-    "\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n  ": types.GetUserApplicationsDocument,
+    "\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n    status\n  }\n}\n  ": types.GetUserApplicationsDocument,
     "\nmutation Mutation($input: UserApplicationInput!) {\n  updateApplication(input: $input) {\n    id\n    userId\n    applicationId\n    status\n    messages\n    succeeded\n  }\n}\n": types.MutationDocument,
     "\nquery GetApplicationById($getApplicationByIdId: String!) {\n  getApplicationById(id: $getApplicationByIdId) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n": types.GetApplicationByIdDocument,
 };
@@ -80,7 +80,7 @@ export function gql(source: "\nquery GetAllApplications {\n  getAllApplications 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n  "): (typeof documents)["\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n  }\n}\n  "];
+export function gql(source: "\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n    status\n  }\n}\n  "): (typeof documents)["\nquery GetUserApplications($type: Float!) {\n  getUserApplications(type: $type) {\n    name\n    id\n    description\n    type\n    deadline\n    courses\n    applyLink\n    messages\n    succeeded\n    status\n  }\n}\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

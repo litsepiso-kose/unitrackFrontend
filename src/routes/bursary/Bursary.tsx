@@ -1,27 +1,13 @@
 import { InfoOutlined } from "@mui/icons-material"
 import { Alert, Box, CircularProgress, Typography } from "@mui/joy"
 import BasicTable from "../../components/BasicTable";
-import { ROUTES } from "../../helpers/common";
+import { ApplicationStatus, ROUTES } from "../../helpers/common";
 import { useNavigate } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Notice } from "../../components/Notice";
 import { GetUserApplicationsQuery } from "../../__generated__/graphql";
- 
-const _GetApplications = gql`
-query GetUserApplications($type: Float!) {
-  getUserApplications(type: $type) {
-    name
-    id
-    description
-    type
-    deadline
-    courses
-    applyLink
-    messages
-    succeeded
-  }
-}
-  `
+import { _GetApplications } from "../university/University";
+
 
 function Bursary() {
   const navigate = useNavigate();
@@ -61,9 +47,9 @@ function Bursary() {
           data?.getUserApplications.map(item => ({
             id: item.id,
             Name: item.name || "",
-            Description: item.description || "",
+            // Description: item.description || "",
             Deadline: item.deadline || "",
-            Status: 2,
+            Status: ApplicationStatus[item.status] || "Unknown",  // Convert status number to string
             "Type": item.type === 0 ? "Bursary" : "Academic",
             "Apply link": item.applyLink
           })) || []

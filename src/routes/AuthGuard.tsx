@@ -41,7 +41,6 @@ export default function AuthGuard({ children }: RootProps) {
           let url = ROUTES.SIGNIN;
           if (roomId) url += `roomId=${roomId}`
           else if (location?.pathname) {
-            debugger
             url += `?location=${location?.pathname}`
           }
 

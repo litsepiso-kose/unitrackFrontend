@@ -83,7 +83,6 @@ export default function Page() {
         sessionStorage.setItem(STR_TOKEN, token);
         setTimeout(() => {
           let url = ROUTES.HOME;
-          debugger
           const roomId = searchParams.get("roomId")
           const location = searchParams.get("location")
           if (roomId) {
